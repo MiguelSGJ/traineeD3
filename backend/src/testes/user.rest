@@ -1,0 +1,35 @@
+### ✅ Criar usuário
+POST http://localhost:3000/api/v1/user/
+Content-Type: application/json
+
+{
+  "name": "João da Silva",
+  "email": "joao@email.com",
+  "password": "123456"
+}
+
+###
+
+### 📋 Listar todos os usuários
+GET http://localhost:3000/api/v1/user
+
+###
+
+### 🔍 Buscar um usuário por ID
+GET http://localhost:3000/api/v1/user/681d4fadeea2bef0dae25923
+
+###
+
+### ✏️ Atualizar um usuário por ID
+PUT http://localhost:3000/api/v1/user/681d4fadeea2bef0dae25923
+Content-Type: application/json
+
+{
+  "name": "João Atualizado",
+  "email": "joao.novo@email.com"
+}
+
+###
+
+### ❌ Deletar um usuário por ID
+DELETE http://localhost:3000/api/v1/user/681d4fadeea2bef0dae25923
