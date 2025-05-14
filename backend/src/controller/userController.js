@@ -1,5 +1,7 @@
 import User from "../model/User.js";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs"
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
+import { sendVerificationEmail } from "../../mailtrap/emails.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -14,11 +16,21 @@ export const createUser = async (req, res) => {
       return res.status(400).json({ error: "Email already exists!" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ name, email, password: hashedPassword });
+    const hashedPassword = await bcryptjs.hash(password, 10);
+    const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+
+    const user = await User.create({ 
+      name, 
+      email, 
+      password: hashedPassword,
+      verificationToken,
+      verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000 // 24 horas
+    });
+
+    generateTokenAndSetCookie(res, user._id);
+    await sendVerificationEmail(user.email, verificationToken);
 
     res.status(201).json({ message: "User created", user });
-    console.log("debug!");
   } catch (error) {
     res
       .status(500)

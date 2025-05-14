@@ -11,12 +11,12 @@ const Mongo = {
 
     try {
       const uri = `${mongoConnectionString}/${mongoDbName}`;
-
+      
       const connection = await mongoose.connect(uri);
 
       this.client = connection.connection;
 
-      console.log("Connected to mongo");
+      console.log(`Connected to mongo: ${connection.connection.host}`);
       return this.client;
     } catch (error) {
       console.error("Error connecting to mongo", error.message);

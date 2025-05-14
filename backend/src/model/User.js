@@ -18,9 +18,26 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: [true, "Password is mandatory"],
-      minlength: [6, "Minimal is 5 character"],
+      minlength: [6, "Minimal is 6 character"],
       select: false,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user"
+    },
+    lastLogin: {
+      type: Date,
+      default: Date.now
+    },
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
+    resetPasswordToken: String,
+    resetPasswordExpiresAt: Date,
+    verificationToken: String,
+    verificationTokenExpiresAt: Date
   },
   {
     timestamps: true,
