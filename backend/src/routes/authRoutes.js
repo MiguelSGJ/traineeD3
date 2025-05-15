@@ -4,14 +4,18 @@ import {
   getAllUsers,
   getUserById,
   updateUser,
-  deleteUser
-} from "../controller/userController.js";
+  deleteUser,
+  verifyUser
+} from "../controller/authController.js";
 
 const userRouter = express.Router();
 
 // Rotas básicas do CRUD
 // Criar
 userRouter.post("/", createUser);
+
+// Verificar Email
+userRouter.post("/verify", verifyUser)
 
 // Ler
 userRouter.get("/", getAllUsers);
